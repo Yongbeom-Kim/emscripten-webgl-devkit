@@ -1,0 +1,4 @@
+{
+    "entry": ["main.cpp"],
+    "params": ["-o ./dist/[name].html"]
+}

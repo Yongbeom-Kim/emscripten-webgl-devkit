@@ -1,0 +1,22 @@
+{
+  "name": "mini-emscripten-framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node config/watch_compile.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yongbeom-Kim/mini-emscripten-framework.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yongbeom-Kim/mini-emscripten-framework/issues"
+  },
+  "homepage": "https://github.com/Yongbeom-Kim/mini-emscripten-framework#readme",
+  "devDependencies": {
+    "node-watch": "^0.7.3"
+  }
+}
