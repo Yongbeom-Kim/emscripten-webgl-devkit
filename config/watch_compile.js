@@ -4,8 +4,6 @@ const toml = require('toml');
 const http = require('http');
 const { exec, execSync } = require("child_process");
 
-let webserver_served = false;
-
 const configData = toml.parse(fs.readFileSync("./config/config.toml"));
 
 // Parse Entry Path.
@@ -19,8 +17,6 @@ const entryFileName = entryFile.substring(0, entryFile.lastIndexOf("."));
 
 const outputDir = replacePlaceholders(configData.output.dir);
 const outputPath = replacePlaceholders(outputDir + "/" + configData.output.outfile);
-
-const servedFilePath = ("served" in configData.output) ? outputDir + "/" + configData.output.served : outputPath;
 
 console.clear();
 
@@ -63,31 +59,6 @@ function build() {
         console.log(`Compiled ${entryPath} successfully! ${stdout}`);
         console.log(`Watching ${entryDir} for changes...`);
     });
-}
-
-/**
- * Serve html file in a webserver
- */
-let server = null;
-function serve() {
-    const PORT = 8080;
-    if (server != null) {
-        server.stop();
-    }
-
-    fs.readFile(servedFilePath, (err, html) => {
-        if (err) throw err;
-
-        server = http.createServer((request, response) => {
-            response.writeHeader(200, { "Content-Type": "text/html" });
-            response.write(html);
-            response.end();
-        }).listen(PORT);
-        
-        console.log(`Server available on: http://localhost:${PORT}`);
-    })
-
-    webserver_served = true;
 }
 
 function replacePlaceholders(str) {
