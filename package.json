@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node config/watch_compile.js"
+    "dev": "node config/watch_compile.js",
+    "build": "node .\\build\\tasks.js build"
   },
   "repository": {
     "type": "git",
