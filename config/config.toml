@@ -4,7 +4,10 @@ infile = "main.cpp"
 
 [output]
 dir = "./dist"
-outfile = "[name].html"
+outfile = "[name].js"
+# To serve the outfile, comment out the below line.
+# If unspecified, serve the outfile.
+served = "index.html"
 
 [command]
-params = ["-o ./dist/[name].html"]
+params = [""]

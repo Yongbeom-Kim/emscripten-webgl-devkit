@@ -18,7 +18,9 @@ const entryFile = configData.entry.infile;
 const entryFileName = entryFile.substring(0, entryFile.lastIndexOf("."));
 
 const outputDir = replacePlaceholders(configData.output.dir);
-const outputPath = replacePlaceholders(configData.output.dir + "/" + configData.output.outfile);
+const outputPath = replacePlaceholders(outputDir + "/" + configData.output.outfile);
+
+const servedFilePath = ("served" in configData.output) ? outputDir + "/" + configData.output.served : outputPath;
 
 console.clear();
 
@@ -34,12 +36,19 @@ watch(entryDir, (evt, name) => {
 
 });
 
+// Serve on file change
+watch(outputDir, (evt, name) => {
+    serve();
+});
+
+
 /**
  * Build emscripten file
  */
 function build() {
     const params = replacePlaceholders(configData.command.params.join(" "));
-    const command = `emcc ${entryPath} ${params}`;
+    const command = `emcc ${entryPath} -o ${outputPath} ${params}`;
+    console.log(`> ${command}`);
 
 
     exec(command, (error, stdout, stderr) => {
@@ -52,7 +61,6 @@ function build() {
             return;
         }
         console.log(`Compiled ${entryPath} successfully! ${stdout}`);
-        serve();
         console.log(`Watching ${entryDir} for changes...`);
     });
 }
@@ -60,17 +68,17 @@ function build() {
 /**
  * Serve html file in a webserver
  */
+let server = null;
 function serve() {
     const PORT = 8080;
-    if (webserver_served) {
-        console.log(`Server available on: http://localhost:${PORT}`);
-        return;
+    if (server != null) {
+        server.stop();
     }
 
-    fs.readFile(outputPath, (err, html) => {
+    fs.readFile(servedFilePath, (err, html) => {
         if (err) throw err;
 
-        const server = http.createServer((request, response) => {
+        server = http.createServer((request, response) => {
             response.writeHeader(200, { "Content-Type": "text/html" });
             response.write(html);
             response.end();
@@ -78,6 +86,7 @@ function serve() {
         
         console.log(`Server available on: http://localhost:${PORT}`);
     })
+
     webserver_served = true;
 }
 
