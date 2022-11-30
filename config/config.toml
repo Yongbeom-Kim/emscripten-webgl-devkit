@@ -1,0 +1,6 @@
+[entry]
+dir = "./src"
+file = "main.cpp"
+
+[command]
+params = ["-o ./dist/[name].html"]

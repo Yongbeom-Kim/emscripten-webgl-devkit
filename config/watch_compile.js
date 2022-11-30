@@ -1,28 +1,30 @@
 const watch = require('node-watch');
 const fs = require('fs');
 const { exec } = require("child_process");
+const toml = require('toml');
 
-// watch('./src', {recursive: true}, console.log);
+const configData = toml.parse(fs.readFileSync("./config/config.toml"));
 
-const obj = JSON.parse(fs.readFileSync("./config/config.json"));
-const entryPoints = obj.entry;
-const params = obj.params.join(" ");
-const command = `emcc ./src/${entryfile} ${params}`
+// Parse Entry Path.
+// If entryPath = configData.entry = ".src/main.cpp",
+// If entryFile = "main.cpp",
+// If entryFileName = "main"
+const entryPath = configData.entry.dir + "/" + configData.entry.file;
+const entryFile = configData.entry.file;
+const entryFileName = entryFile.substring(0, entryFile.lastIndexOf("."));
 
-entryPoints.forEach(entryFile => {
+// Run Command
+const params = configData.command.params.join(" ").replaceAll("[name]", entryFileName);
+const command = `emcc ${entryPath} ${params}`;
 
-    const entryFileName = entryFile.substring(0, entryFile.lastIndexOf("."));
-
-    exec(command.replaceAll("[name]", entryFileName), (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
-    
+exec(command, (error, stdout, stderr) => {
+    if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`Compiled successfully! ${stdout}`);
 });
