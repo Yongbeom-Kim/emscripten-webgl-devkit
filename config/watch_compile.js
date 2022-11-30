@@ -32,11 +32,6 @@ watch(entryDir, (evt, name) => {
 
 });
 
-// Serve on file change
-watch(outputDir, (evt, name) => {
-    serve();
-});
-
 
 /**
  * Build emscripten file
