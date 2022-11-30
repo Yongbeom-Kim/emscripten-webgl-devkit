@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Yongbeom-Kim/mini-emscripten-framework#readme",
   "devDependencies": {
+    "minimist": "^1.2.7",
     "node-watch": "^0.7.3",
     "toml": "^3.0.0"
   }

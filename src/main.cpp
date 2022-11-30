@@ -15,7 +15,7 @@ int main()
     emscripten_webgl_make_context_current(ctx);
 
     // this goes after you have activated the webgl context
-    glClearColor(0.984, 0.4627, 0.502, 1.0);
+    // glClearColor(0.984, 0.4627, 0.502, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     printf("Loaded!\n");

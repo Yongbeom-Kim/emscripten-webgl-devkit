@@ -9,5 +9,6 @@ outfile = "[name].js"
 # If unspecified, serve the outfile.
 served = "index.html"
 
-[command]
+[build]
 params = [""]
+watch = true

@@ -1700,8 +1700,6 @@ var ASM_CONSTS = {
 
   function _glClear(x0) { GLctx['clear'](x0) }
 
-  function _glClearColor(x0, x1, x2, x3) { GLctx['clearColor'](x0, x1, x2, x3) }
-
   function _proc_exit(code) {
       EXITSTATUS = code;
       if (!keepRuntimeAlive()) {
@@ -1755,8 +1753,7 @@ var asmLibraryArg = {
   "emscripten_webgl_init_context_attributes": _emscripten_webgl_init_context_attributes,
   "emscripten_webgl_make_context_current": _emscripten_webgl_make_context_current,
   "fd_write": _fd_write,
-  "glClear": _glClear,
-  "glClearColor": _glClearColor
+  "glClear": _glClear
 };
 var asm = createWasm();
 /** @type {function(...*):?} */
