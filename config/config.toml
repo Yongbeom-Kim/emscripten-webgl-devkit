@@ -1,6 +1,10 @@
 [entry]
 dir = "./src"
-file = "main.cpp"
+infile = "main.cpp"
+
+[output]
+dir = "./dist"
+outfile = "[name].html"
 
 [command]
 params = ["-o ./dist/[name].html"]
